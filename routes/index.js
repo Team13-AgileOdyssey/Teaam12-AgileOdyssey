@@ -1,11 +1,9 @@
-const loginRoutes = require('./login');
- const navigationRoutes = require('./navigation');
+const auth = require('./auth');
+const navigationRoutes = require('./navigation');
 
- const constructorMethod = (app) => {
-   app.use('/', loginRoutes);
-   app.use('/username',navigationRoutes); //username will be dynamic
- };
+const constructorMethod = (app) => {
+  app.use('/', auth);
+  app.use('/navigation', navigationRoutes);
+};
 
-
-
- module.exports = constructorMethod;
+module.exports = constructorMethod;
