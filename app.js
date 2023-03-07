@@ -57,7 +57,7 @@ app.use("/employee/construction/homepage", (req, res, next) => {
 });
 
 app.use("/admin/homepage", (req, res, next) => {
-  if (!req.session.user || req.session.user.type !== "construction") {
+  if (!req.session.user || req.session.user.type !== "admin") {
     return res.redirect("/admin/login");
   } else {
     next();
@@ -65,7 +65,7 @@ app.use("/admin/homepage", (req, res, next) => {
 });
 
 app.use("/admin/create-construction", (req, res, next) => {
-  if (!req.session.user || req.session.user.type !== "construction") {
+  if (!req.session.user || req.session.user.type !== "admin") {
     return res.redirect("/admin/login");
   } else {
     next();
@@ -73,7 +73,7 @@ app.use("/admin/create-construction", (req, res, next) => {
 });
 
 app.use("/admin/create-sales", (req, res, next) => {
-  if (!req.session.user || req.session.user.type !== "construction") {
+  if (!req.session.user || req.session.user.type !== "admin") {
     return res.redirect("/admin/login");
   } else {
     next();

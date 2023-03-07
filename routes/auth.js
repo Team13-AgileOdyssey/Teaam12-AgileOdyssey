@@ -175,13 +175,14 @@ router
                 .auth()
                 .signInWithEmailAndPassword(req.body.email, req.body.password)
                 .then(async (user) => {
-
-                    const eventref = database.ref('users');
+                    console.log("here");
+                    const eventref = database.ref('admin');
                     const snapshot = await eventref.once('value');
                     const value = snapshot.val();
                     const currentUserData = value[user.user.uid];
-                    if (!currentUserData) return res.redirect('/login');
-                    if (currentUserData && currentUserData.type !== "user") return res.redirect('admin/login');
+                    console.log(currentUserData)
+                    if (!currentUserData) return res.redirect('/admin/login');
+                    if (currentUserData && currentUserData.type !== "admin") return res.redirect('/admin/login');
 
                     req.session.user = { _id: user.user.uid, type: "admin" };
                     return res.redirect('/admin/homepage');
