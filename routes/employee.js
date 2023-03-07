@@ -19,8 +19,11 @@ router
 router
     .route("/construction/login")
     .get(async (req, res) => {
-        if (req.session.user && req.session.type === "construction") {
-            return res.redirect('/construction/homepage');
+        if (req.session.user) {
+            if (req.session.user.type === "user") return res.redirect('/navigation/homepage');
+            if (req.session.user.type === "construction") return res.redirect('/employee/construction/homepage');
+            if (req.session.user.type === "sales") return res.redirect('/employee/sales/homepage');
+            if (req.session.user.type === "admin") return res.redirect('/admin/homepage');
         }
         else {
             return res.render('login-construction', { title: "Log-in", layout: 'main-login-register' });
@@ -58,8 +61,11 @@ router
 router
     .route("/sales/login")
     .get(async (req, res) => {
-        if (req.session.user && req.session.type === "sales") {
-            return res.redirect('/sales/homepage');
+        if (req.session.user) {
+            if (req.session.user.type === "user") return res.redirect('/navigation/homepage');
+            if (req.session.user.type === "construction") return res.redirect('/employee/construction/homepage');
+            if (req.session.user.type === "sales") return res.redirect('/employee/sales/homepage');
+            if (req.session.user.type === "admin") return res.redirect('/admin/homepage');
         }
         else {
             return res.render('login-sales', { title: "Log-in", layout: 'main-login-register' });

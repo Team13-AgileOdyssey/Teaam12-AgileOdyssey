@@ -29,8 +29,52 @@ app.use(
 );
 
 app.use("/navigation/*", (req, res, next) => {
-  if (!req.session.user) {
+  if (req.session.user.type === "user") return res.redirect('/navigation/homepage');
+  if (req.session.user.type === "construction") return res.redirect('/employee/construction/homepage');
+  if (req.session.user.type === "sales") return res.redirect('/employee/sales/homepage');
+  if (req.session.user.type === "admin") return res.redirect('/admin/homepage');
+  if (!req.session.user || req.session.user.type !== "user") {
     return res.redirect("/");
+  } else {
+    next();
+  }
+});
+
+app.use("/employee/sales/homepage", (req, res, next) => {
+  if (!req.session.user || req.session.user.type !== "sales") {
+    return res.redirect("/employee/sales/login");
+  } else {
+    next();
+  }
+});
+
+app.use("/employee/construction/homepage", (req, res, next) => {
+  if (!req.session.user || req.session.user.type !== "construction") {
+    return res.redirect("/employee/construction/login");
+  } else {
+    next();
+  }
+});
+
+app.use("/admin/homepage", (req, res, next) => {
+  if (!req.session.user || req.session.user.type !== "construction") {
+    return res.redirect("/admin/login");
+  } else {
+    next();
+  }
+});
+
+app.use("/admin/create-construction", (req, res, next) => {
+  if (!req.session.user || req.session.user.type !== "construction") {
+    return res.redirect("/admin/login");
+  } else {
+    next();
+  }
+});
+
+app.use("/admin/create-sales", (req, res, next) => {
+  if (!req.session.user || req.session.user.type !== "construction") {
+    return res.redirect("/admin/login");
   } else {
     next();
   }
