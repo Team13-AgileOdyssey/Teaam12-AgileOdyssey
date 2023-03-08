@@ -2,20 +2,13 @@
 <header>
     <nav>
         <ul>
-            {{#if userLogin}}
+
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Logout</a></li>
-            {{else}}  
-             
-                    {{!-- {{#if userLogin}} --}}
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Signup</a></li>
-              {{/if}}
+            <li><form method="GET" action="/admin/create-construction"><input type="submit" value="Create a construction employee"></form></li>
+            <li><form method="GET" action="/admin/create-sales"><input type="submit" value="Create a sales Employee"></form></li>
+
         </ul>
     </nav>
 </header>

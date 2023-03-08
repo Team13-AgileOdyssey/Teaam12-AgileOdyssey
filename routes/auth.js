@@ -81,7 +81,7 @@ router
     })
 
 router
-    .route("/admin/create")
+    .route("/admin/create/sales")
     .post(async (req, res) => {
         try {
             firebase
@@ -90,23 +90,42 @@ router
                 .then((data) => {
                     const user = data.user;
                     let databaseRef = database.ref();
-                    if (req.body.type === "construction") {
 
-                        let userData = req.body;
-                        delete userData.password;
-                        userData.type = "construction"
+                    let userData = req.body;
+                    delete userData.password;
+                    userData.type = "sales"
 
-                        databaseRef.child('/construction/' + user.uid).set(userData);
-                        return res.redirect('/admin/homepage');
-                    } else if (req.body.type === "sales") {
+                    databaseRef.child('/sales/' + user.uid).set(userData);
+                    return res.redirect('/admin/homepage');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return res.json({ error: error });
+                });
+        }
+        catch (e) {
+            console.log('No good', e);
+            res.redirect('/');
+        }
+    });
 
-                        let userData = req.body;
-                        delete userData.password;
-                        userData.type = "sales"
+router
+    .route("/admin/create/construction")
+    .post(async (req, res) => {
+        try {
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(req.body.email, req.body.password)
+                .then((data) => {
+                    const user = data.user;
+                    let databaseRef = database.ref();
 
-                        databaseRef.child('/sales/' + user.uid).set(userData);
-                        return res.redirect('/admin/homepage');
-                    }
+                    let userData = req.body;
+                    delete userData.password;
+                    userData.type = "construction"
+
+                    databaseRef.child('/construction/' + user.uid).set(userData);
+                    return res.redirect('/admin/homepage');
                 })
                 .catch(function (error) {
                     console.log(error);

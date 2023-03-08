@@ -2,20 +2,12 @@
 <header>
     <nav>
         <ul>
-            {{#if userLogin}}
+
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Logout</a></li>
-            {{else}}  
-             
-                    {{!-- {{#if userLogin}} --}}
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Signup</a></li>
-              {{/if}}
+            <li><form method="GET" action="/logout"><input type="submit" value="Logout"></form></li>
+
         </ul>
     </nav>
 </header>
