@@ -29,10 +29,11 @@ app.use(
 );
 
 app.use("/navigation/*", (req, res, next) => {
-  if (req.session.user.type === "user") return res.redirect('/navigation/homepage');
-  if (req.session.user.type === "construction") return res.redirect('/employee/construction/homepage');
-  if (req.session.user.type === "sales") return res.redirect('/employee/sales/homepage');
-  if (req.session.user.type === "admin") return res.redirect('/admin/homepage');
+//   if (req.session.user.type === "user") return res.redirect('/navigation/homepage');
+//   if (req.session.user.type === "construction") return res.redirect('/employee/construction/homepage');
+//   if (req.session.user.type === "sales") return res.redirect('/employee/sales/homepage');
+//   if (req.session.user.type === "admin") return res.redirect('/admin/homepage');
+
   if (!req.session.user || req.session.user.type !== "user") {
     return res.redirect("/");
   } else {
