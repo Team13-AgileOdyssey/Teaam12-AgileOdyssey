@@ -1,13 +1,177 @@
-<h1>Homepage User</h1>
-<header>
-    <nav>
-        <ul>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Photos</title>
+	<style>
+		body {
+			font-family: Times New Roman;
+			margin: 0;
+			padding: 0;
+			background-color: #f2f2f2;
+		}
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+		nav {
+			background-color: #f1f1f1;
+			padding: 10px;
+			text-align: center;
+		}
+		nav a {
+			text-decoration: none;
+			color: #333;
+			padding: 5px;
+			margin: 0 10px;
+		}
+		nav a:hover {
+			background-color: #333;
+			color: #fff;
+		}
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+		}
+		.task {
+			margin-bottom: 20px;
+			padding: 10px;
+			background-color: #f9f9f9;
+			border-radius: 5px;
+		}
+		.task h3 {
+			margin: 0 0 7px;
+			color: #333;
+		}
+		.task p {
+			margin: 0 0 3px;
+			
+		}
+		.task ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.task li {
+			margin-bottom: 5px;
+			padding-left: 20px;
+			
+		}
+		#progress-bar-container {
+			background-color: #ddd;
+			height: 20px;
+			border-radius: 10px;
+			margin: 50px auto;
+			width: 50%;
+			position: relative;
+		}
 
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><form method="GET" action="/logout"><input type="submit" value="Logout"></form></li>
+		
+		#progress-bar {
+			background-color: #4CAF50;
+			height: 100%;
+			border-radius: 10px;
+			width: 0%;
+			transition: width 0.5s ease-in-out;
+		}
 
-        </ul>
-    </nav>
-</header>
+		
+		#progress-label {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			text-align: center;
+			font-weight: bold;
+			font-size: 14px;
+			line-height: 20px;
+			color: #fff;
+			text-shadow: 1px 1px #000;
+		}
+
+		
+		#progress-percentage {
+			position: absolute;
+			top: 0;
+			right: -40px;
+			width: 30px;
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			color: #fff;
+			font-size: 14px;
+			background-color: #4CAF50;
+			border-radius: 10px;
+			box-shadow: 1px 1px #000;
+		}
+
+		
+		.completed {
+			text-decoration: line-through;
+			color: #aaa;
+		}
+	</style>
+</head>
+<body>
+<nav>
+		<a href="#">Home</a>
+		<a href="#">About</a>
+		<a href="#">Contact</a>
+	</nav>
+<div class="container">
+	<h2> Task List </h2>
+<div id="task">
+		<ul>
+			<li id="task1">Task 1</li>
+			<li id="task2">Task 2</li>
+			<li id="task3">Task 3</li>
+			<li id="task4">Task 4</li>
+			<li id="task5">Task 5</li>
+		</ul>
+	<div id="progress-bar-container">
+		<div id="progress-bar"></div>
+		<div id="progress-label">Task Progress</div>
+		<div id="progress-percentage">0%</div>
+	</div>
+
+	
+	</div>
+</div>
+	<script>
+		// JavaScript to update progress bar based on completed tasks
+		var completedTasks = 0;
+		var totalTasks = 5;
+
+		function completeTask(taskId) {
+			var task = document.getElementById(taskId);
+			if (!task.classList.contains('completed')) {
+				task.classList.add('completed');
+				completedTasks++;
+				updateProgressBar();
+			}
+		}
+
+		function updateProgressBar() {
+			var progressBar = document.getElementById("progress-bar");
+			var progressLabel = document.getElementById("progress-label");
+			var progressPercentage = document.getElementById("progress-percentage");
+			var width = Math.floor(completedTasks / totalTasks * 100);
+			progressBar.style.width = width + '%';
+			progressPercentage.innerHTML = width + '%';
+			progressLabel.innerHTML = 'Task Progress: ' + completedTasks + '/' + totalTasks;
+		}
+
+		// Attach event listeners to task elements to update progress bar
+document.getElementById("task1").addEventListener('click', function() { completeTask("task1"); });
+document.getElementById("task2").addEventListener('click', function() { completeTask("task2"); });
+document.getElementById("task3").addEventListener('click', function() { completeTask("task3"); });
+document.getElementById("task4").addEventListener('click', function() { completeTask("task4"); });
+document.getElementById("task5").addEventListener('click', function() { completeTask("task5"); });
+</script>
+
+</body>
+</html>
