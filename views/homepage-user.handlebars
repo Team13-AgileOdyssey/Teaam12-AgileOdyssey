@@ -117,30 +117,81 @@
 	</style>
 </head>
 <body>
-<nav>
+	<nav>
 		<a href="#">Home</a>
 		<a href="#">About</a>
 		<a href="#">Contact</a>
 	</nav>
-<div class="container">
-	<h2> Task List </h2>
-<div id="task">
-		<ul>
-			<li id="task1">Task 1</li>
-			<li id="task2">Task 2</li>
-			<li id="task3">Task 3</li>
-			<li id="task4">Task 4</li>
-			<li id="task5">Task 5</li>
-		</ul>
-	<div id="progress-bar-container">
-		<div id="progress-bar"></div>
-		<div id="progress-label">Task Progress</div>
-		<div id="progress-percentage">0%</div>
+	<div class="container">
+		<h2>Task List</h2>
+		<div id="task">
+			<ul>
+				{{#each tasks}}
+					<li id="{{id}}" class="{{#if completed}}completed{{/if}}" onclick="completeTask('{{id}}')">{{name}}</li>
+				{{/each}}
+			</ul>
+			<div id="progress-bar-container">
+				<div id="progress-bar"></div>
+				<div id="progress-label">Task Progress</div>
+				<div id="progress-percentage">{{progress}}%</div>
+			</div>
+		</div>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+	<script type="text/javascript">
+		// Initialize tasks data
+		var tasks = [
+			{id: "task1", name: "Task 1", completed: false},
+			{id: "task2", name: "Task 2", completed: false},
+			{id: "task3", name: "Task 3", completed: false},
+			{id: "task4", name: "Task 4", completed: false},
+			{id: "task5", name: "Task 5", completed: false}
+		];
 
-	
-	</div>
-</div>
+		// Calculate task progress
+		var completedTasks = 0;
+		for (var i = 0; i < tasks.length; i++) {
+			if (tasks[i].completed) {
+				completedTasks++;
+			}
+		}
+		var progress = Math.floor(completedTasks / tasks.length * 100);
+
+		// Compile and render handlebars template
+		var source = document.getElementById("task-template").innerHTML;
+		var template = Handlebars.compile(source);
+		var context = {tasks: tasks, progress: progress};
+		var html = template(context);
+		document.getElementById("task").innerHTML = html;
+
+		// Update progress bar based on completed tasks
+		function completeTask(taskId) {
+			for (var i = 0; i < tasks.length; i++) {
+				if (tasks[i].id == taskId && !tasks[i].completed) {
+					tasks[i].completed = true;
+					completedTasks++;
+					break;
+				}
+			}
+			progress = Math.floor(completedTasks / tasks.length * 100);
+			document.getElementById("progress-bar").style.width = progress + '%';
+			document.getElementById("progress-percentage").innerHTML = progress + '%';
+			document.getElementById("progress-label").innerHTML = 'Task Progress: ' + completedTasks + '/' + tasks.length;
+			document.getElementById(taskId).classList.add('completed');
+		}
+	</script>
+	<script id="task-template" type="text/x-handlebars-template">
+		<ul>
+			{{#each tasks}}
+				<li id="{{id}}" class="{{#if completed}}completed{{/if}}" onclick="completeTask('{{id}}')">{{name}}</li>
+			{{/each}}
+		</ul>
+		<div id="progress-bar-container">
+			<div id="progress-bar"></div>
+			<div id="progress-label">Task Progress</div>
+			<div id="progress-percentage">{{progress}}%</div>
+		</div>
+		
 	<script>
 		// JavaScript to update progress bar based on completed tasks
 		var completedTasks = 0;
