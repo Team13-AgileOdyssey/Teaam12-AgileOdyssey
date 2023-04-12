@@ -107,10 +107,10 @@ nav ul {
     cursor: pointer;
   }
   
-  /* form input[type="submit"]:hover {
+  form input[type="submit"]:hover {
     background-color: #fff;
     color: #000;
-  } */
+  }
 
   #registration-form {
     max-width: 400px;
