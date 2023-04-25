@@ -39,6 +39,7 @@ const users = mongoCollections.users;
  };
 
  const getAllUsers = async () => {
+  //will get all the users
   const userCollection = await users();
   const userList = await userCollection.find({}).toArray();
   return userList;
