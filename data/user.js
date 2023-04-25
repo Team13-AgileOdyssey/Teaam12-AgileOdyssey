@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 
+
 // Initialize Firebase
 var config = {
     apiKey: "YOUR_API_KEY",
@@ -37,13 +38,42 @@ const users = mongoCollections.users;
 
  };
 
- const getAllUsers = async () => {};
+ const getAllUsers = async () => {
+  //will get all the users
+  const userCollection = await users();
+  const userList = await userCollection.find({}).toArray();
+  return userList;
+ };
 
- const getUserById = async (groupId) => {};
+ const getUserById = async (userId) => {
+  if (!userId) throw 'You must provide a user ID';
+  const userCollection = await users();
+  const user = await userCollection.findOne({ _id: userId });
+  if (!user) throw 'User not found';
+  return user;
+ };
 
- const removeUser = async (groupId) => {};
+ const removeUser = async (userId) => {
+  if (!userId) throw 'You must provide a user ID';
+  const userCollection = await users();
+  const deletionInfo = await userCollection.deleteOne({ _id: userId });
+  if (deletionInfo.deletedCount === 0) throw `Could not delete user with ID ${userId}`;
+  return true;
+ };
 
- const updateUser = async (groupId) => {};
+ const updateUser = async (userId,updatedUser) => {
+  if (!userId) throw 'You must provide a user ID';
+  if (!updatedUser) throw 'You must provide an updated user object';
+  const userCollection = await users();
+  const updatedUserData = {
+    name: updatedUser.name,
+    email: updatedUser.email,
+    phone: updatedUser.phone
+  };
+  const updateInfo = await userCollection.updateOne({ _id: userId }, { $set: updatedUserData });
+  if (updateInfo.modifiedCount === 0) throw `Could not update user with ID ${userId}`;
+  return await getUserById(userId);
+ };
 
  module.exports = {
    createUser,
