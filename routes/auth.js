@@ -55,7 +55,7 @@ router
 router
     .route("/admin/homepage")
     .get(async (req, res) => {
-        return res.render('homepage-admin', { title: "Admin", layout: 'main' });
+        return res.render('homepage-admin', { title: "Admin", layout: 'main-admin' });
     })
 
 router

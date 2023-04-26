@@ -6,14 +6,14 @@ const database = firebase.database();
 router
     .route("/construction/homepage")
     .get(async (req, res) => {
-        return res.render('homepage-construction', { title: "Construction Team", layout: 'main' });
+        return res.render('homepage-construction', { title: "Construction Team", layout: 'main-construction' });
     })
 
 
 router
     .route("/sales/homepage")
     .get(async (req, res) => {
-        return res.render('homepage-sales', { title: "Sales Team", layout: 'main' });
+        return res.render('homepage-sales', { title: "Sales Team", layout: 'main-sales' });
     })
 
 router
