@@ -120,3 +120,7 @@ nav ul {
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+form label2 {
+    font-weight: bold;
+    margin-top: 20px;
+  }
