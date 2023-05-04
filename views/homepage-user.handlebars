@@ -1,228 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>View Photos</title>
-	<style>
-		body {
-			font-family: Times New Roman;
-			margin: 0;
-			padding: 0;
-			background-color: #f2f2f2;
-		}
-		header {
-			background-color: #333;
-			color: #fff;
-			padding: 10px;
-			text-align: center;
-		}
-		nav {
-			background-color: #f1f1f1;
-			padding: 10px;
-			text-align: center;
-		}
-		nav a {
-			text-decoration: none;
-			color: #333;
-			padding: 5px;
-			margin: 0 10px;
-		}
-		nav a:hover {
-			background-color: #333;
-			color: #fff;
-		}
-		.container {
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #fff;
-			box-shadow: 0 0 10px rgba(0,0,0,0.2);
-		}
-		.task {
-			margin-bottom: 20px;
-			padding: 10px;
-			background-color: #f9f9f9;
-			border-radius: 5px;
-		}
-		.task h3 {
-			margin: 0 0 7px;
-			color: #333;
-		}
-		.task p {
-			margin: 0 0 3px;
-			
-		}
-		.task ul {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-		.task li {
-			margin-bottom: 5px;
-			padding-left: 20px;
-			
-		}
-		#progress-bar-container {
-			background-color: #ddd;
-			height: 20px;
-			border-radius: 10px;
-			margin: 50px auto;
-			width: 50%;
-			position: relative;
-		}
+<h1>User Homepage</h1>
+<header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><form method="GET" action="/logout"><input type="submit" value="Logout"></form></li>
+        </ul>
+    </nav>
+</header>
 
-		
-		#progress-bar {
-			background-color: #4CAF50;
-			height: 100%;
-			border-radius: 10px;
-			width: 0%;
-			transition: width 0.5s ease-in-out;
-		}
-
-		
-		#progress-label {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			text-align: center;
-			font-weight: bold;
-			font-size: 14px;
-			line-height: 20px;
-			color: #fff;
-			text-shadow: 1px 1px #000;
-		}
-
-		
-		#progress-percentage {
-			position: absolute;
-			top: 0;
-			right: -40px;
-			width: 30px;
-			height: 20px;
-			line-height: 20px;
-			text-align: center;
-			color: #fff;
-			font-size: 14px;
-			background-color: #4CAF50;
-			border-radius: 10px;
-			box-shadow: 1px 1px #000;
-		}
-
-		
-		.completed {
-			text-decoration: line-through;
-			color: #aaa;
-		}
-	</style>
-</head>
-<body>
-	<nav>
-		<a href="#">Home</a>
-		<a href="#">About</a>
-		<a href="#">Contact</a>
-	</nav>
-	<div class="container">
-		<h2>Task List</h2>
-		<div id="task">
-			<ul>
-				{{#each tasks}}
-					<li id="{{id}}" class="{{#if completed}}completed{{/if}}" onclick="completeTask('{{id}}')">{{name}}</li>
-				{{/each}}
-			</ul>
-			<div id="progress-bar-container">
-				<div id="progress-bar"></div>
-				<div id="progress-label">Task Progress</div>
-				<div id="progress-percentage">{{progress}}%</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-	<script type="text/javascript">
-		// Initialize tasks data
-		var tasks = [
-			{id: "task1", name: "Task 1", completed: false},
-			{id: "task2", name: "Task 2", completed: false},
-			{id: "task3", name: "Task 3", completed: false},
-			{id: "task4", name: "Task 4", completed: false},
-			{id: "task5", name: "Task 5", completed: false}
-		];
-
-		// Calculate task progress
-		var completedTasks = 0;
-		for (var i = 0; i < tasks.length; i++) {
-			if (tasks[i].completed) {
-				completedTasks++;
-			}
-		}
-		var progress = Math.floor(completedTasks / tasks.length * 100);
-
-		// Compile and render handlebars template
-		var source = document.getElementById("task-template").innerHTML;
-		var template = Handlebars.compile(source);
-		var context = {tasks: tasks, progress: progress};
-		var html = template(context);
-		document.getElementById("task").innerHTML = html;
-
-		// Update progress bar based on completed tasks
-		function completeTask(taskId) {
-			for (var i = 0; i < tasks.length; i++) {
-				if (tasks[i].id == taskId && !tasks[i].completed) {
-					tasks[i].completed = true;
-					completedTasks++;
-					break;
-				}
-			}
-			progress = Math.floor(completedTasks / tasks.length * 100);
-			document.getElementById("progress-bar").style.width = progress + '%';
-			document.getElementById("progress-percentage").innerHTML = progress + '%';
-			document.getElementById("progress-label").innerHTML = 'Task Progress: ' + completedTasks + '/' + tasks.length;
-			document.getElementById(taskId).classList.add('completed');
-		}
-	</script>
-	<script id="task-template" type="text/x-handlebars-template">
-		<ul>
-			{{#each tasks}}
-				<li id="{{id}}" class="{{#if completed}}completed{{/if}}" onclick="completeTask('{{id}}')">{{name}}</li>
-			{{/each}}
-		</ul>
-		<div id="progress-bar-container">
-			<div id="progress-bar"></div>
-			<div id="progress-label">Task Progress</div>
-			<div id="progress-percentage">{{progress}}%</div>
-		</div>
-		
-	<script>
-		// JavaScript to update progress bar based on completed tasks
-		var completedTasks = 0;
-		var totalTasks = 5;
-
-		function completeTask(taskId) {
-			var task = document.getElementById(taskId);
-			if (!task.classList.contains('completed')) {
-				task.classList.add('completed');
-				completedTasks++;
-				updateProgressBar();
-			}
-		}
-
-		function updateProgressBar() {
-			var progressBar = document.getElementById("progress-bar");
-			var progressLabel = document.getElementById("progress-label");
-			var progressPercentage = document.getElementById("progress-percentage");
-			var width = Math.floor(completedTasks / totalTasks * 100);
-			progressBar.style.width = width + '%';
-			progressPercentage.innerHTML = width + '%';
-			progressLabel.innerHTML = 'Task Progress: ' + completedTasks + '/' + totalTasks;
-		}
-
-		// Attach event listeners to task elements to update progress bar
-document.getElementById("task1").addEventListener('click', function() { completeTask("task1"); });
-document.getElementById("task2").addEventListener('click', function() { completeTask("task2"); });
-document.getElementById("task3").addEventListener('click', function() { completeTask("task3"); });
-document.getElementById("task4").addEventListener('click', function() { completeTask("task4"); });
-document.getElementById("task5").addEventListener('click', function() { completeTask("task5"); });
-</script>
-
-</body>
-</html>
+<main>
+    <h2>Welcome to Solar Project Management</h2>
+    <p>With our Solar Project Management tool, you can easily track your solar installation project from start to finish. From the initial consultation to the final inspection, our platform ensures that your project is on time, on budget, and completed to the highest quality.</p>
+    
+    <h3>Features</h3>
+    <ul>
+        <li>View project status and progress</li>
+        <li>Communicate with your sales representative, construction team, and operations manager</li>
+        <li>View and upload project photos and documents</li>
+        <li>Track financials and payment installments</li>
+        <li>Access a secure portal with controlled access to different functionalities and shared data</li>
+    </ul>
+    
+    <h3>Get Started</h3>
+    <p>If you are an existing user, log in to your account to view your current projects. If you are a new user, sign up for an account to start your solar installation project.</p>
+    
+    <div class="cta-buttons">
+        <form method="GET" action="/login"><input type="submit" value="Login"></form>
+        <form method="GET" action="/register"><input type="submit" value="Sign Up"></form>
+    </div>
+</main>
